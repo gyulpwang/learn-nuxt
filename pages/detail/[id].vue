@@ -17,24 +17,12 @@
 </template>
 
 <!-- <script>
-import axios from "axios";
-/* import { fetchProductById } from '~/api' */
+import { fetchProductById } from '~/api'
 
 export default {
-    /* async useAsyncData({ params }) {
-        debugger;
+    async useAsyncData({ params }) {
         const response = await fetchProductById(params.id)
         return { product: response.data }
-    }, */
-    data() {
-        return {
-            product: {},
-        }
-    },
-    async fetch() {
-        const res = await axios.get(`http://localhost:3000/products/1`);
-        console.log(res);
-        this.product = res.data;
     },
 }
 </script> -->
