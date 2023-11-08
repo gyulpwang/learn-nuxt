@@ -37,11 +37,6 @@ export default {
             this.$router.push(`detail/${id}`);
         },
         async searchProducts() {
-            console.log(`
-            ------------------------
-            ${this.searchKeyword}
-            ------------------------
-            `);
             const response = await fetchProductsByKeyword(this.searchKeyword);
             const products = response.data.map(item => ({
                 ...item,
@@ -55,7 +50,6 @@ export default {
     },
     async created() {
         const response = await axios.get("http://localhost:3000/products");
-        console.log(response.data);
         const products = response.data.map(item => ({
             ...item,
             imageUrl: `${item.imageUrl}?random${Math.random}`
@@ -104,4 +98,4 @@ export default {
     border-radius: 50%;
     cursor: pointer;
 }
-</style>
+</style>~/api/index_temp

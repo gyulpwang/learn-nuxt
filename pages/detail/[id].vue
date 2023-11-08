@@ -12,7 +12,7 @@
           <div class="side-panel">
             <p class="name">{{ product.name }}</p>
             <p class="price">{{ product.price }}</p>
-            <button type="button" @click="addToCart">cart</button>
+            <button type="button" @click="addToCart">카트에 담기</button>
           </div>
         </div>
       </div>
@@ -26,7 +26,7 @@ const id = route.params.id;
 const response = await useFetch(`http://localhost:3000/products/${id}`)
 const product: any = (response.data.value);
 
-const addToCart = ref(() => {
+const addToCart = ref(async () => {
   const router = useRouter();
   const store = useMainStore();
 
@@ -41,12 +41,10 @@ const addToCart = ref(() => {
     justify-content: center;
     margin: 2rem 0;
 }
-
 .product-image {
     width: 500px;
     height: 375px;
 }
-
 .side-panel {
     display: flex;
     flex-direction: column;
