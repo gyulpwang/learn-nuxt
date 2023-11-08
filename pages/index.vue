@@ -1,60 +1,67 @@
 <template>
     <div class="app">
         <main>
-            <div>
-                <input type="text" />
-            </div>
+            <SearchInput
+                :searchKeyword="searchKeyword"
+                @search="searchProducts"
+            />
             <ul>
                 <li class="item flex" v-for="product in products" :key="product.id" @click="moveToDetailPage(product.id)">
-                    <img class="product-image" :src="product.imageUrl" :alt="product.name" />
+                    <img class="product-image" :src="product.imageUrl" :alt="product.name" onerror="this.src='https://img.freepik.com/premium-vector/default-image-icon-vector-missing-picture-page-website-design-mobile-app-no-photo-available_87543-11093.jpg'" />
                     <p>{{ product.name }}</p>
                     <span>{{ product.price }}</span>
-                    <!-- <img class="product-image" :src="product.thumbnailUrl" :alt="product.title" />
-                    <p>{{ product.title }}</p>
-                    <span>{{ product.price }}</span> -->
                 </li>
             </ul>
+            <div class="cart-wrapper">
+                <button class="btn" @click="moveToCartPage">🛒</button>
+            </div>
         </main>
     </div>
 </template>
 
 <script>
 import axios from 'axios';
+import SearchInput from '@/components/SearchInput.vue';
+import { fetchProductsByKeyword } from '@/api/index'
 
 export default {
-    /* setup() {
-        const products = ref([]);
-    }, */
+    components: { SearchInput },
     data() {
         return {
             products: [],
-        }
+            searchKeyword: '',
+        };
     },
     methods: {
         moveToDetailPage(id) {
             this.$router.push(`detail/${id}`);
         },
+        async searchProducts() {
+            console.log(`
+            ------------------------
+            ${this.searchKeyword}
+            ------------------------
+            `);
+            const response = await fetchProductsByKeyword(this.searchKeyword);
+            const products = response.data.map(item => ({
+                ...item,
+                imageUrl: `${item.imageUrl}?random${Math.random}`
+            }));
+            this.products = products;
+        },
+        moveToCartPage() {
+            this.$router.push(`cart`);
+        }
     },
     async created() {
-        const response = await axios.get('http://localhost:3000/products');
-        /* const response = await axios.get('https://jsonplaceholder.typicode.com/photos'); */
-        
-        console.log(response.data)
+        const response = await axios.get("http://localhost:3000/products");
+        console.log(response.data);
         const products = response.data.map(item => ({
             ...item,
             imageUrl: `${item.imageUrl}?random${Math.random}`
-        }))
-        this.products = response.data;
+        }));
+        this.products = products;
     },
-    /* async fetch() {
-        const response = await axios.get('http://localhost:3000/products');
-        console.log(response.data)
-        const products = response.data.map(item => ({
-            ...item,
-            imageUrl: `${item.imageUrl}?random${Math.random}`
-        }))
-        products.value = response.data;
-    } */
 }
 </script>
 
@@ -63,7 +70,6 @@ export default {
     display: flex;
     justify-content: center;
 }
-
 .item {
     display: inline-block;
     width: 400px;
@@ -72,12 +78,10 @@ export default {
     margin: 0 0.5rem;
     cursor: pointer;
 }
-
 .product-image {
     width: 400px;
     height: 250px;
 }
-
 .app {
     position: relative;
 }
@@ -91,7 +95,13 @@ export default {
 
 .cart-wrapper .btn {
     display: inline-block;
-    height: 40px;
-    font-size: 1rem;
+    width: 50px;
+    height: 50px;
+    font-size: 1.4rem;
     font-weight: 500;
-}</style>
+    background-color: lightpink;
+    border-color: lightpink;
+    border-radius: 50%;
+    cursor: pointer;
+}
+</style>

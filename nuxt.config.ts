@@ -4,6 +4,9 @@ export default defineNuxtConfig({
   devServer: {
     port: 5000,
   },
+  
+  // Replace Vuex pinia
+  modules: ['@pinia/nuxt'],
 
   // Global CSS
   css: ['@/assets/css/reset.css'],
