@@ -16,6 +16,16 @@
 <script setup lang="ts">
 import { useMainStore } from '@/store/index.js'
 const store: any = useMainStore();
+
+const runtimeConfig = useRuntimeConfig();
+const apiBase = runtimeConfig.public.apiBase;
+const nodeEnv = runtimeConfig.public.env.nodeEnv;
+const envName = runtimeConfig.public.env.envName;
+// -------------------
+console.log(apiBase);
+console.log(nodeEnv);
+console.log(envName);
+// -------------------
 </script>
 
 <style scoped>
