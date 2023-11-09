@@ -4,9 +4,26 @@ export default defineNuxtConfig({
   devServer: {
     port: 5000,
   },
+
+  app: {
+    head: {
+      charset: 'utf-8',
+      viewport: 'width=device-width, initial-scale=1',
+      title: 'Nuxt Shopping',
+      htmlAttrs: {
+        lang: 'en',
+      },
+      // Meta Tag
+      meta: [
+        { charset: 'utf-8' },
+        { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+        { hid: 'description', name: 'description', content: '' },
+      ],
+      link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
+    }
+  },
   
-  // Replace Vuex pinia
-  // Divide Environment by dotenv
+  // Replace Vuex to Pinia
   modules: ['@pinia/nuxt'],
 
   // Global CSS
